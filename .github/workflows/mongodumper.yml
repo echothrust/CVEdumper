@@ -54,9 +54,6 @@ jobs:
       - name: Export the full CVE.advisories as Array
         run: mongoexport --jsonArray --host localhost:17017 --collection=advisories --db=CVE --out=CVE-full-ARR-$(date +"%Y%m%d").json
 
-      - name: Import the json into maxscale mongo
-        run: mongoimport --uri=mongodb://localhost:17017/test -c advisories CVE-reviewed-$(date +"%Y%m%d").json
-
       - name: Dump the database
         run: |
           MYSQL_HOST=$(docker inspect  -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' cvedumper_master_1)
